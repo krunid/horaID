@@ -122,8 +122,71 @@
             background: #059669;
         }
 
-        .read-btn i {
-            font-size: 20px;
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: popupIn 0.3s ease-out;
+        }
+
+        @keyframes popupIn {
+            from {
+                transform: translate(-50%, -60%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        .popup-title {
+            font-size: 24px;
+            color: #4a1d96;
+            margin-bottom: 15px;
+        }
+
+        .popup-message {
+            font-size: 18px;
+            color: #4b5563;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .popup-button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .popup-button:hover {
+            background: #4f46e5;
         }
 
         .calculation {
@@ -207,6 +270,18 @@
         <div id="result" class="result">
             <h2>คำทำนาย:</h2>
             <p id="fortuneText"></p>
+        </div>
+    </div>
+
+    <!-- Popup Component -->
+    <div id="popupOverlay" class="popup-overlay">
+        <div class="popup">
+            <div class="popup-title">
+                <i class="fas fa-info-circle"></i>
+                <span id="popupTitle"></span>
+            </div>
+            <div class="popup-message" id="popupMessage"></div>
+            <button class="popup-button" onclick="closePopup()">ตกลง</button>
         </div>
     </div>
 
