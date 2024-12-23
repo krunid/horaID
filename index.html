@@ -1,106 +1,93 @@
-
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ทำนายเลขท้ายบัตรประชาชน</title>
+    <title>ทำนายดวงชะตาแบบแยกส่วน</title>
     <style>
-        /* เพิ่ม style สำหรับส่วนคำอธิบาย */
-        .info-section {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .info-header {
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #553c9a;
-            margin-bottom: 10px;
-        }
-
-        .info-content {
-            display: none;
-            padding: 10px;
-            background: #f8f4ff;
-            border-radius: 8px;
-        }
-
-        .info-content.active {
-            display: block;
-        }
-
-        .explanation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .number-meaning {
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        /* คงไว้ style เดิมทั้งหมด ... */
         body {
             font-family: 'Sarabun', sans-serif;
             background: linear-gradient(135deg, #f3e7ff 0%, #ffe7f4 100%);
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .container {
-            background: white;
-            background-image: url('https://www.thebangkokinsight.com/wp-content/uploads/2024/04/%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%82%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%B9%E0%B8%A5%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%B8%E0%B8%94-%E0%B8%9A%E0%B8%B1%E0%B8%95%E0%B8%A3%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%8A%E0%B8%99%E0%B8%AB%E0%B8%B2%E0%B8%A2-%E0%B8%95%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%97%E0%B8%B3%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%84%E0%B8%A3%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%872-cutout.png');
-            background-size: cover;
-            background-position: center;
-            background-blend-mode: overlay;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .title-container {
+        .header {
             text-align: center;
             margin-bottom: 30px;
         }
 
-        h1 {
+        .header h1 {
             color: #6b46c1;
             margin: 0;
             font-size: 2em;
         }
 
-        h2 {
+        .header h2 {
             color: #805ad5;
-            margin: 10px 0 0 0;
+            margin: 10px 0;
             font-size: 1.5em;
+        }
+
+        .section-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .section-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #6b46c1;
+            color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+
+        .section-button:hover {
+            background-color: #553c9a;
+        }
+
+        .section-button.active {
+            background-color: #553c9a;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #6b46c1;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .calculator {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .input-group {
             margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            color: #4a5568;
-            font-size: 1.1em;
         }
 
         input {
@@ -110,7 +97,17 @@
             text-align: center;
             border: 2px solid #e2e8f0;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
         .button-group {
@@ -118,35 +115,6 @@
             gap: 10px;
         }
 
-        button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .predict-btn {
-            background-color: #6b46c1;
-            color: white;
-        }
-
-        .predict-btn:hover {
-            background-color: #553c9a;
-        }
-
-        .reset-btn {
-            background-color: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .reset-btn:hover {
-            background-color: #cbd5e0;
-        }
-
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -160,7 +128,7 @@
         }
 
         .modal-content {
-            background-color: white;
+            background: white;
             padding: 30px;
             border-radius: 15px;
             max-width: 500px;
@@ -169,143 +137,159 @@
             overflow-y: auto;
         }
 
-        .close {
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .result-steps {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f8f4ff;
-            border-radius: 8px;
-        }
-
-        .fortune-result {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin-top: 20px;
-            padding: 20px;
-            background-color: #f3e7ff;
+        }
+
+        .grid-item {
+            background: #f8f4ff;
+            padding: 15px;
             border-radius: 8px;
-            font-size: 1.1em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="title-container">
+        <div class="header">
             <h1>🔮 ทำนายดวงชะตา</h1>
             <h2>จากเลขท้ายบัตรประชาชน</h2>
         </div>
-        <div class="input-group">
-            <label>กรุณาใส่เลข 3 หลักท้ายบัตรประชาชน:</label>
-            <input type="text" id="numbers" maxlength="3" placeholder="000">
-        </div>
-        <div class="button-group">
-            <button class="predict-btn" onclick="predict()">ทำนาย</button>
-            <button class="reset-btn" onclick="reset()">เริ่มใหม่</button>
+
+        <div class="section-buttons">
+            <button class="section-button" onclick="showSection('calculator')">เครื่องคำนวณ</button>
+            <button class="section-button" onclick="showSection('numerology')">ทำนายตัวเลข</button>
+            <button class="section-button" onclick="showSection('colors')">สีมงคล</button>
+            <button class="section-button" onclick="showSection('zodiac')">ราศี</button>
+            <button class="section-button" onclick="showSection('birthdate')">วันเดือนปีเกิด</button>
         </div>
 
-                <!-- เพิ่มส่วนคำอธิบาย -->
-        <div class="info-section">
-            <div class="info-header" onclick="toggleInfo('about')">
-                <h3>📖 เกี่ยวกับการทำนาย</h3>
-                <span>▼</span>
-            </div>
-            <div id="about" class="info-content">
-                <h4>วิธีการทำนาย:</h4>
-                <ol>
-                    <li>นำเลข 3 หลักสุดท้ายจากบัตรประชาชนของท่าน</li>
-                    <li>ระบบจะนำตัวเลขทั้ง 3 หลักมาบวกกัน</li>
-                    <li>หากผลรวมมากกว่า 9 จะทำการบวกเลขแต่ละหลักไปเรื่อยๆ จนได้เลขหลักเดียว</li>
-                    <li>เลขหลักเดียวที่ได้จะนำไปทำนายตามหลักโหราศาสตร์และดวงดาว</li>
-                </ol>
-                <p><strong>ตัวอย่าง:</strong> เลข 789 → 7+8+9 = 24 → 2+4 = 6 → ดาวศุกร์</p>
+        <!-- เครื่องคำนวณ -->
+        <div id="calculator" class="content-section calculator">
+            <h3>กรุณาใส่เลข 3 หลักท้ายบัตรประชาชน</h3>
+            <input type="text" id="idNumbers" maxlength="3" placeholder="000">
+            <div class="button-group">
+                <button onclick="predict()" style="background-color: #6b46c1; color: white;">ทำนาย</button>
+                <button onclick="reset()" style="background-color: #e2e8f0;">เริ่มใหม่</button>
             </div>
         </div>
-        
+
+        <!-- ทำนายตัวเลข -->
+        <div id="numerology" class="content-section">
+            <h3>ความหมายของตัวเลขมงคล</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>เลข 1 - ดาวอาทิตย์</h4>
+                    <p>ดาวแห่งความเป็นผู้นำ พลังงาน และความสำเร็จ</p>
+                </div>
+                <!-- เพิ่มตัวเลขอื่นๆ ต่อ -->
+            </div>
+        </div>
+
+        <!-- สีมงคล -->
+        <div id="colors" class="content-section">
+            <h3>สีมงคลประจำตัวเลข</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>เลข 1</h4>
+                    <p>สีหลัก: สีทอง สีเหลือง</p>
+                    <p>สีเสริม: สีส้ม สีน้ำตาล</p>
+                </div>
+                <!-- เพิ่มสีมงคลอื่นๆ ต่อ -->
+            </div>
+        </div>
+
+        <!-- ราศี -->
+        <div id="zodiac" class="content-section">
+            <h3>ราศีและดวงดาว</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>ราศีเมษ ♈</h4>
+                    <p>13 เม.ย. - 13 พ.ค.</p>
+                    <p>ธาตุไฟ, ดาวอังคาร</p>
+                </div>
+                <!-- เพิ่มราศีอื่นๆ ต่อ -->
+            </div>
+        </div>
+
+        <!-- วันเดือนปีเกิด -->
+        <div id="birthdate" class="content-section">
+            <h3>ดวงตามวันเดือนปีเกิด</h3>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>วันอาทิตย์</h4>
+                    <p>ดวงอาทิตย์ - พลัง ความสำเร็จ</p>
+                </div>
+                <!-- เพิ่มวันอื่นๆ ต่อ -->
+            </div>
+        </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal สำหรับแสดงผลทำนาย -->
     <div id="resultModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>ผลการทำนาย</h2>
+            <span style="float:right; cursor:pointer; font-size:24px;" onclick="closeModal()">&times;</span>
+            <h3>ผลการทำนาย</h3>
             <div id="resultContent"></div>
         </div>
     </div>
 
-
     <script>
-                   // เพิ่ม function สำหรับ toggle คำอธิบาย
-            function toggleInfo(id) {
-                const content = document.getElementById(id);
-                content.classList.toggle('active');
-                const arrow = content.previousElementSibling.querySelector('span');
-                arrow.textContent = content.classList.contains('active') ? '▼' : '▲';
-            }
-
-        const fortunes = {
-            1: "ดาวอาทิตย์ส่องแสง - เป็นคนมีพลังงานสูง มีความเป็นผู้นำ มีโชคลาภด้านการงาน",
-            2: "ดาวจันทร์โคจร - จิตใจอ่อนโยน มีเสน่ห์ เป็นที่รักของคนรอบข้าง มีโชคด้านความรัก",
-            3: "ดาวอังคารรุ่งโรจน์ - มีความกล้าหาญ เด็ดเดี่ยว มีพลังในการต่อสู้ชีวิต",
-            4: "ดาวพุธประกาย - มีไหวพริบปฏิภาณดี เฉลียวฉลาด เหมาะกับงานการสื่อสาร",
-            5: "ดาวพฤหัสส่องสว่าง - มีความยุติธรรม มีเมตตา จะได้รับความช่วยเหลือจากผู้ใหญ่",
-            6: "ดาวศุกร์เรืองรอง - มีเสน่ห์ รักสวยรักงาม โชคดีด้านความรักและการเงิน",
-            7: "ดาวเสาร์ทรงพลัง - อดทน มุ่งมั่น ขยัน จะประสบความสำเร็จด้วยความพยายาม",
-            8: "ดาวราหูรุ่งเรือง - มีความลึกลับ น่าค้นหา มักเจอโชคลาภก้อนใหญ่",
-            9: "ดาวเกตุเจิดจ้า - มีญาณหยั่งรู้ มีสติปัญญาดี เหมาะกับงานพัฒนาตนเอง"
-        };
-
-        function calculateSum(nums) {
-            let steps = [];
-            let currentSum = nums.split('').map(Number).reduce((a, b) => a + b, 0);
-            steps.push(`${nums.split('').join(' + ')} = ${currentSum}`);
+        function showSection(sectionId) {
+            // ซ่อนทุกส่วน
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // แสดงส่วนที่เลือก
+            document.getElementById(sectionId).classList.add('active');
             
-            while (currentSum > 9) {
-                const nextStep = currentSum.toString().split('').map(Number);
-                currentSum = nextStep.reduce((a, b) => a + b, 0);
-                steps.push(`${nextStep.join(' + ')} = ${currentSum}`);
-            }
-            
-            return { finalNum: currentSum, steps };
+            // ปรับสถานะปุ่ม
+            document.querySelectorAll('.section-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
         }
 
+        // แสดงส่วนเครื่องคำนวณเมื่อโหลดหน้า
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('calculator').classList.add('active');
+            document.querySelector('.section-button').classList.add('active');
+        });
+
+        // ฟังก์ชันสำหรับคำนวณและทำนาย
         function predict() {
-            const numbers = document.getElementById('numbers').value;
+            const numbers = document.getElementById('idNumbers').value;
             if (numbers.length === 3 && /^\d+$/.test(numbers)) {
-                const result = calculateSum(numbers);
-                showResult(result);
+                // คำนวณผลรวม
+                const sum = numbers.split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+                const finalSum = sum > 9 ? sum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0) : sum;
+                
+                // แสดงผลในโมดอล
+                showResult(numbers, sum, finalSum);
             } else {
                 alert('กรุณาใส่ตัวเลข 3 หลักให้ถูกต้อง');
             }
         }
 
-        function reset() {
-            document.getElementById('numbers').value = '';
-            closeModal();
-        }
-
-        function showResult(result) {
+        function showResult(numbers, sum, finalSum) {
             const modal = document.getElementById('resultModal');
             const content = document.getElementById('resultContent');
             
-            let stepsHtml = '<div class="result-steps"><h3>วิธีคำนวณ:</h3>';
-            result.steps.forEach(step => {
-                stepsHtml += `<p>${step}</p>`;
-            });
-            stepsHtml += '</div>';
-
-            let fortuneHtml = `
-                <div class="fortune-result">
-                    <h3>ผลรวมสุดท้าย: ${result.finalNum}</h3>
-                    <p>${fortunes[result.finalNum]}</p>
+            content.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <p>เลขที่ใส่: ${numbers}</p>
+                    <p>ผลรวมเบื้องต้น: ${sum}</p>
+                    <p>ผลรวมสุดท้าย: ${finalSum}</p>
+                </div>
+                <div style="background: #f8f4ff; padding: 15px; border-radius: 8px;">
+                    <h4>คำทำนาย</h4>
+                    <p>[คำทำนายตามตัวเลขที่ได้]</p>
                 </div>
             `;
-
-            content.innerHTML = stepsHtml + fortuneHtml;
+            
             modal.style.display = 'flex';
         }
 
@@ -313,7 +297,12 @@
             document.getElementById('resultModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
+        function reset() {
+            document.getElementById('idNumbers').value = '';
+            closeModal();
+        }
+
+        // ปิดโมดอลเมื่อคลิกภายนอก
         window.onclick = function(event) {
             const modal = document.getElementById('resultModal');
             if (event.target == modal) {
@@ -321,8 +310,8 @@
             }
         }
 
-        // Allow only numbers in input
-        document.getElementById('numbers').addEventListener('input', function(e) {
+        // อนุญาตให้ใส่เฉพาะตัวเลข
+        document.getElementById('idNumbers').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
     </script>
