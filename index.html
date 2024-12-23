@@ -254,9 +254,6 @@
             <button class="predict-btn" onclick="predict()">
                 <i class="fas fa-magic"></i> ทำนาย
             </button>
-            <button class="read-btn" onclick="readFortune()">
-                <i class="fas fa-volume-up"></i> อ่านคำทำนาย
-            </button>
             <button class="reset-btn" onclick="resetForm()">
                 <i class="fas fa-redo"></i> เริ่มใหม่
             </button>
@@ -269,15 +266,20 @@
         
         <div id="result" class="result">
             <h2>คำทำนาย:</h2>
-            <p id="fortuneText"></p>
+            <div class="fortune-content">
+                <p id="fortuneText"></p>
+                <i class="fas fa-volume-up read-icon" onclick="readFortune()" title="คลิกเพื่อฟังคำทำนาย"></i>
+            </div>
         </div>
     </div>
 
     <!-- Popup Component -->
     <div id="popupOverlay" class="popup-overlay">
         <div class="popup">
-            <div class="popup-title">
+            <div class="popup-icon">
                 <i class="fas fa-info-circle"></i>
+            </div>
+            <div class="popup-title">
                 <span id="popupTitle"></span>
             </div>
             <div class="popup-message" id="popupMessage"></div>
