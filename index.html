@@ -50,10 +50,25 @@
             margin-top: 15px;
             display: none;
         }
-        .fortune-text {
-            font-size: 18px;
-            margin-right: 10px;
-            line-height: 1.6;
+        .calculation {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .calculation h3 {
+            color: #4a1d96;
+            margin-bottom: 10px;
+        }
+
+        .calculation .step {
+            margin: 8px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #6366f1;
         }
         .read-icon {
             cursor: pointer;
@@ -105,6 +120,12 @@
             <button class="predict" onclick="predict()">ทำนาย</button>
             <button class="reset" onclick="resetForm()">เริ่มใหม่</button>
         </div>
+
+        <div id="calculation" class="calculation">
+            <h3>📊 วิธีคำนวณ</h3>
+            <div id="calcSteps"></div>
+        </div>
+
         <div id="result" class="result">
             <div style="display: flex; align-items: start;">
                 <div id="fortuneText" class="fortune-text"></div>
@@ -134,11 +155,28 @@
         };
 
         function calculateSum(nums) {
-            let sum = nums.split('').map(Number).reduce((a, b) => a + b, 0);
-            while (sum > 9) {
-                sum = String(sum).split('').map(Number).reduce((a, b) => a + b, 0);
+            let sum = nums.split('').map(Number);
+            let steps = [];
+            
+            // แสดงเลขแต่ละหลัก
+            steps.push(`เลขทั้ง 3 หลัก คือ: ${nums[0]}, ${nums[1]}, ${nums[2]}`);
+            
+            // รวมเลขครั้งแรก
+            let firstSum = sum.reduce((a, b) => a + b, 0);
+            steps.push(`นำมาบวกกัน: ${sum.join(' + ')} = ${firstSum}`);
+            
+            let currentSum = firstSum;
+            // ถ้าผลรวมมากกว่า 9 ให้แยกหลักแล้วบวกต่อ
+            while (currentSum > 9) {
+                let digits = String(currentSum).split('').map(Number);
+                let nextSum = digits.reduce((a, b) => a + b, 0);
+                steps.push(`แยกหลักแล้วบวก: ${digits.join(' + ')} = ${nextSum}`);
+                currentSum = nextSum;
             }
-            return sum;
+            
+            steps.push(`ผลลัพธ์สุดท้าย: ${currentSum}`);
+            
+            return { sum: currentSum, steps: steps };
         }
 
         function predict() {
@@ -147,8 +185,17 @@
                 showPopup('กรุณาใส่เลข 3 หลักเท่านั้น');
                 return;
             }
-            const sum = calculateSum(numbers);
-            document.getElementById('fortuneText').textContent = fortunes[sum];
+
+            const result = calculateSum(numbers);
+            
+            // แสดงขั้นตอนการคำนวณ
+            const calcSteps = document.getElementById('calcSteps');
+            calcSteps.innerHTML = result.steps.map(step => 
+                `<div class="step">${step}</div>`
+            ).join('');
+            
+            document.getElementById('fortuneText').textContent = fortunes[result.sum];
+            document.getElementById('calculation').style.display = 'block';
             document.getElementById('result').style.display = 'block';
         }
 
